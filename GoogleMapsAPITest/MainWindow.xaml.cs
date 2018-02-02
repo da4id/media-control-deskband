@@ -40,7 +40,7 @@ namespace GoogleMapsAPITest
             req.Origins = new List<Location>{ new Location("Kägenstrasse 4153 Reinach")};
             req.DepartureTime = DateTime.Now;
             req.TravelMode = TravelMode.Driving;
-            req.Key = "AIzaSyDT0dI1bjDapLg1PQ81V4dTNKqhbjngTE8";
+            req.Key = "";
             req.TrafficModel = TrafficModel.Pessimistic;
             
             var resp = GoogleApi.GoogleMaps.DistanceMatrix.Query(req);
