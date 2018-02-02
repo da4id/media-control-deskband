@@ -57,7 +57,7 @@ namespace SampleBars
                 req.Origins = new List<Location> { new Location(Properties.Settings.Default.Abfahrtsort) };
                 req.TravelMode = TravelMode.Driving;
                 req.DepartureTime = DateTime.Now;
-                req.Key = "";
+                req.Key = "AIzaSyDT0dI1bjDapLg1PQ81V4dTNKqhbjngTE8";
                 req.TrafficModel = TrafficModel.Pessimistic;
                 var test = req.GetQueryStringParameters();
 
