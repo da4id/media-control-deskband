@@ -5,5 +5,8 @@
     <Setting Name="Abfahrtsort" Type="System.String" Scope="User">
       <Value Profile="(Default)">4153 Reinach</Value>
     </Setting>
+    <Setting Name="Zielort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">4052 Basel</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

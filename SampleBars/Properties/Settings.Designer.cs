@@ -34,5 +34,17 @@ namespace SampleBars.Properties {
                 this["Abfahrtsort"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4052 Basel")]
+        public string Zielort {
+            get {
+                return ((string)(this["Zielort"]));
+            }
+            set {
+                this["Zielort"] = value;
+            }
+        }
     }
 }

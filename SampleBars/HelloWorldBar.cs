@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace SampleBars
 {
     [Guid("AE07101B-46D4-4a98-AF68-0333EA26E113")]
-    [BandObject("Hello World Bar", BandObjectStyle.Horizontal | BandObjectStyle.ExplorerToolbar | BandObjectStyle.TaskbarToolBar, HelpText = "Shows bar that says hello.")]
+    [BandObject("Verkehrsaufkommen", BandObjectStyle.Horizontal | BandObjectStyle.ExplorerToolbar | BandObjectStyle.TaskbarToolBar, HelpText = "Shows bar that says hello.")]
     public class HelloWorldBar : BandObject
     {
         private System.ComponentModel.Container components = null;
@@ -26,7 +26,7 @@ namespace SampleBars
         public HelloWorldBar()
         {
             InitializeComponent();
-            tmr1.Interval = 15*1000;
+            tmr1.Interval = 15*1000*60;
             tmr1.Tick += tmr1_Tick;
             tmr1.Start();
             requestTrafficFromGoogle();
@@ -57,7 +57,7 @@ namespace SampleBars
                 req.Origins = new List<Location> { new Location(Properties.Settings.Default.Abfahrtsort) };
                 req.TravelMode = TravelMode.Driving;
                 req.DepartureTime = DateTime.Now;
-                req.Key = "API Key";
+                req.Key = "AIzaSyDT0dI1bjDapLg1PQ81V4dTNKqhbjngTE8";
                 req.TrafficModel = TrafficModel.Pessimistic;
                 var test = req.GetQueryStringParameters();
 
@@ -69,7 +69,7 @@ namespace SampleBars
                 {
                     if(parsedResponse.Rows.First().Elements.First().DurationInTraffic != null)
                     {
-                        this.Title = parsedResponse.Rows.First().Elements.First().DurationInTraffic.Text;
+                        this.Title = Math.Round( parsedResponse.Rows.First().Elements.First().DurationInTraffic.Value/60.0).ToString();
                     }
                 }
             }
@@ -87,7 +87,7 @@ namespace SampleBars
             // HelloWorldBar
             // 
             this.MinSize = new System.Drawing.Size(0, 30);
-            this.Name = "HelloWorldBar";
+            this.Name = "Verkehrsaufkommen";
             this.Size = new System.Drawing.Size(0, 30);
             this.Title = "Hello Bar";
             this.ResumeLayout(false);
