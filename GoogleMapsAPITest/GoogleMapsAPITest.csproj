@@ -39,7 +39,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="GoogleApi, Version=3.2.15.0, Culture=neutral, PublicKeyToken=781851e053b06e74, processorArchitecture=MSIL">
-      <HintPath>..\packages\GoogleApi.3.2.15\lib\net45\GoogleApi.dll</HintPath>
+      <HintPath>..\packages\GoogleApi.3.2.16\lib\net45\GoogleApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -73,9 +73,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DistanceMatrixParser\Element.cs" />
-    <Compile Include="DistanceMatrixParser\myDistanceMatrixResponse.cs" />
-    <Compile Include="DistanceMatrixParser\Row.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

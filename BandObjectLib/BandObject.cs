@@ -49,10 +49,15 @@ namespace BandObjectLib
 
 		private void InitializeComponent()
 		{
-			// 
-			// ExplorerBar
-			// 
-			this.Name = "BandObject";
+            this.SuspendLayout();
+            // 
+            // BandObject
+            // 
+            this.BackColor = System.Drawing.Color.Transparent;
+            this.Name = "BandObject";
+            this.Size = new System.Drawing.Size(256, 150);
+            this.ResumeLayout(false);
+
 		}
 
 

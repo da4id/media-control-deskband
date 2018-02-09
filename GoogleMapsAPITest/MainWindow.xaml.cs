@@ -18,7 +18,6 @@ using GoogleApi.Entities.Common.Enums;
 using GoogleApi.Entities.Maps.Common.Enums;
 using GoogleApi.Entities.Maps.DistanceMatrix.Request;
 using GoogleApi.Entities.Maps.DistanceMatrix.Response;
-using Newtonsoft.Json;
 
 namespace GoogleMapsAPITest
 {
@@ -45,9 +44,7 @@ namespace GoogleMapsAPITest
             
             var resp = GoogleApi.GoogleMaps.DistanceMatrix.Query(req);
 
-            var parsedResponse = JsonConvert.DeserializeObject<DistanceMatrixParser.myDistanceMatrixResponse>(resp.RawJson);
-
-            lbDuration.Content = parsedResponse.Rows.First().Elements.First().DurationInTraffic.Text;
+            lbDuration.Content = resp.RawJson;
         }
     }
 }

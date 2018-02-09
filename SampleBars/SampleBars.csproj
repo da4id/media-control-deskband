@@ -85,7 +85,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="GoogleApi, Version=3.2.15.0, Culture=neutral, PublicKeyToken=781851e053b06e74, processorArchitecture=MSIL">
-      <HintPath>..\packages\GoogleApi.3.2.15\lib\net45\GoogleApi.dll</HintPath>
+      <HintPath>..\packages\GoogleApi.3.2.16\lib\net45\GoogleApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -115,6 +115,17 @@
     <Compile Include="DistanceMatrixParser\Element.cs" />
     <Compile Include="DistanceMatrixParser\myDistanceMatrixResponse.cs" />
     <Compile Include="DistanceMatrixParser\Row.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings.Designer.cs">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </Compile>
     <Compile Include="HelloWorldBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -125,6 +136,13 @@
     </Compile>
     <EmbeddedResource Include="HelloWorldBar.resx">
       <DependentUpon>HelloWorldBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings.resx">
+      <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
