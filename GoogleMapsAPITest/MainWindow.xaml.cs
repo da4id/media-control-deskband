@@ -44,7 +44,7 @@ namespace GoogleMapsAPITest
             
             var resp = GoogleApi.GoogleMaps.DistanceMatrix.Query(req);
 
-            lbDuration.Content = resp.RawJson;
+            lbDuration.Content = resp.Rows.First().Elements.First().DurationInTraffic.Value;
         }
     }
 }

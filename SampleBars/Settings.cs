@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SampleBars;
+using GoogleApi.Entities.Maps.Common.Enums;
 
 namespace SampleBars
 {
@@ -16,10 +17,12 @@ namespace SampleBars
         public Settings()
         {
             InitializeComponent();
-            cb_Mode.Items.Add("Pessimistisch");
-            cb_Mode.Items.Add("Standard");
-            cb_Mode.Items.Add("Optimistisch");
-            cb_Mode.SelectedIndex = cb_Mode.FindStringExact(Properties.Settings.Default.TrafficMode);
+            foreach (var item in Enum.GetValues(typeof(TrafficModel)))
+            {
+                cb_Mode.Items.Add(item);
+            }
+
+            cb_Mode.SelectedItem = Properties.Settings.Default.TrafficMode;
 
             tb_Origin.Text = Properties.Settings.Default.Abfahrtsort;
             tb_Destination.Text = Properties.Settings.Default.Zielort;
@@ -31,7 +34,7 @@ namespace SampleBars
             Properties.Settings.Default.Abfahrtsort = tb_Origin.Text;
             Properties.Settings.Default.Zielort = tb_Destination.Text;
             Properties.Settings.Default.ApiKey = tb_Key.Text;
-            Properties.Settings.Default.TrafficMode = cb_Mode.SelectedItem.ToString();
+            Properties.Settings.Default.TrafficMode = cb_Mode.SelectedItem as TrafficModel;
             this.Close();
             
 

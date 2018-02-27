@@ -11,8 +11,8 @@
     <Setting Name="ApiKey" Type="System.String" Scope="User">
       <Value Profile="(Default)">AIzaSyDT0dI1bjDapLg1PQ81V4dTNKqhbjngTE8</Value>
     </Setting>
-    <Setting Name="TrafficMode" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Pessimistisch</Value>
+    <Setting Name="TrafficMode" Type="GoogleApi.Entities.Maps.Common.Enums.TrafficModel" Scope="User">
+      <Value Profile="(Default)">Pessimistic</Value>
     </Setting>
   </Settings>
 </SettingsFile>

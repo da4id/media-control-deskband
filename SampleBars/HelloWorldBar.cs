@@ -20,6 +20,11 @@ namespace SampleBars
     [BandObject("Verkehrsaufkommen", BandObjectStyle.Horizontal | BandObjectStyle.ExplorerToolbar | BandObjectStyle.TaskbarToolBar, HelpText = "Shows bar that says hello.")]
     public class HelloWorldBar : BandObject
     {
+        private const int ShortUpdateIntervall = 60 * 1000;
+        private const int LongUpdateIntervall = 5 * 60 * 1000;
+        private const double DelayRatioGreenLimit = 0.1;
+        private const double DelayRatioOrangeLimit = 0.2;
+
         private System.ComponentModel.Container components = null;
         private Label lblDiff;
         private Label lblRoute;
@@ -31,13 +36,13 @@ namespace SampleBars
         public HelloWorldBar()
         {
             InitializeComponent();
-            if (Convert.ToUInt32(DateTime.Now.ToString("HH")) >= 15)
+            if (DateTime.Now.Hour >= 15)
             {
-                tmr1.Interval = 60 * 1000;
+                tmr1.Interval = ShortUpdateIntervall;
             }
             else
             {
-                tmr1.Interval = 60 * 1000 * 5;
+                tmr1.Interval = LongUpdateIntervall;
             }
 
             tmr1.Tick += tmr1_Tick;
@@ -66,61 +71,42 @@ namespace SampleBars
         {
             try
             {
-                var req = new DistanceMatrixRequest();
-                int traffic = 0;
-                int normal = 0;
-                int difference = 0;
-                double prozent = 0.0;
-                req.Destinations = new List<Location> { new Location(Properties.Settings.Default.Zielort) };
-                req.Origins = new List<Location> { new Location(Properties.Settings.Default.Abfahrtsort) };
-                req.TravelMode = TravelMode.Driving;
-                req.DepartureTime = DateTime.Now;
-                req.Key = Properties.Settings.Default.ApiKey;
-                if (Properties.Settings.Default.TrafficMode == "Pessimistisch")
+                var req = new DistanceMatrixRequest()
                 {
-                    req.TrafficModel = TrafficModel.Pessimistic;
-                }
-                else if (Properties.Settings.Default.TrafficMode == "Standard")
-                {
-                    req.TrafficModel = TrafficModel.Best_Guess;
-                }
-                else if (Properties.Settings.Default.TrafficMode == "Optimistisch")
-                {
-                    req.TrafficModel = TrafficModel.Optimistic;
-                }
-
-                var test = req.GetQueryStringParameters();
-                DateTime now = new DateTime();
-
-                now = DateTime.Now;
+                    Destinations = new List<Location> { new Location(Properties.Settings.Default.Zielort) },
+                    Origins = new List<Location> { new Location(Properties.Settings.Default.Abfahrtsort) },
+                    TravelMode = TravelMode.Driving,
+                    DepartureTime = DateTime.Now,
+                    Key = Properties.Settings.Default.ApiKey,
+                    TrafficModel = Properties.Settings.Default.TrafficMode
+                };
 
                 var resp = GoogleApi.GoogleMaps.DistanceMatrix.Query(req);
 
-                var parsedResponse = JsonConvert.DeserializeObject<DistanceMatrixParser.myDistanceMatrixResponse>(resp.RawJson);
-
-                if (resp.Status == GoogleApi.Entities.Common.Enums.Status.Ok)
+                if (resp.Status == Status.Ok)
                 {
-                    if (parsedResponse.Rows.First().Elements.First().DurationInTraffic != null)
+                    if (resp.Rows.First().Elements.First().DurationInTraffic != null)
                     {
-                        traffic = Convert.ToInt32(Math.Round(parsedResponse.Rows.First().Elements.First().DurationInTraffic.Value / 60.0).ToString());
-                        normal = Convert.ToInt32(Math.Round(parsedResponse.Rows.First().Elements.First().Duration.Value / 60.0).ToString());
-                        difference = traffic - normal;
-                        prozent = difference / normal;
+                        var traffic = (int)Math.Round(resp.Rows.First().Elements.First().DurationInTraffic.Value / 60.0);
+                        var normal = (int)Math.Round(resp.Rows.First().Elements.First().Duration.Value / 60.0);
+                        var difference = traffic - normal;
+                        var trafficDelayRatio = difference / (double)normal;
                         if (difference > 0)
                         {
-                            lblDiff.Text = "+" + Convert.ToString(difference) + " min  (norm:" + Convert.ToString(normal) + "min)";
+                            lblDiff.Text = "+" + difference + " min  (norm:" + normal + "min)";
                         }
                         else
                         {
-                            lblDiff.Text = "keine Verspätung " + Convert.ToString(normal) + "min";
+                            lblDiff.Text = "keine Verspätung " + normal + "min";
                         }
 
-                        lblRoute.Text = Properties.Settings.Default.Abfahrtsort + " to " + Properties.Settings.Default.Zielort + " (" + parsedResponse.Rows.First().Elements.First().Distance.Text + ")";
-                        if (prozent < 0.1)
+                        lblRoute.Text = Properties.Settings.Default.Abfahrtsort + " to " + Properties.Settings.Default.Zielort +
+                            " (" + resp.Rows.First().Elements.First().Distance.Text + ")";
+                        if (trafficDelayRatio < DelayRatioGreenLimit)
                         {
                             lblAmpel.ForeColor = Color.Green;
                         }
-                        else if (prozent < 0.2)
+                        else if (trafficDelayRatio < DelayRatioOrangeLimit)
                         {
                             lblAmpel.ForeColor = Color.Orange;
                         }
